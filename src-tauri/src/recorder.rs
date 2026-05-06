@@ -9,8 +9,6 @@ use crate::paste::paste_text;
 use crate::settings::Settings;
 use crate::transcribe_local;
 use crate::transcribe_groq;
-use crate::transcribe_mistral;
-use crate::transcribe_parakeet;
 
 /// Calculate audio duration in seconds (16kHz, 16-bit, mono WAV)
 fn get_audio_duration(audio_path: &PathBuf) -> Result<f64, String> {
