@@ -106,17 +106,8 @@ impl Recorder {
                 transcribe_local::transcribe_local(app, &model_path, &temp_path).await?
             }
             "cloud" => {
-                // Route to selected cloud provider
-                match settings.cloud_provider.as_str() {
-                    "mistral" => {
-                        transcribe_mistral::transcribe_mistral(
-                            &settings.mistral_api_key,
-                            &temp_path,
-                            "voxtral-mini-transcribe-2602".to_string(),
-                        ).await?
-                    }
-                    _ => transcribe_groq::transcribe_groq(&settings.groq_api_key, &temp_path).await?,
-                }
+                // Use Groq cloud engine
+                transcribe_groq::transcribe_groq(&settings.groq_api_key, &temp_path).await?
             }
             "auto" => {
                 // Auto-route: <90s local, >90s cloud
