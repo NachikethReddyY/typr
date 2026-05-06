@@ -3,11 +3,14 @@ use std::sync::{Arc, Mutex};
 use tauri::{AppHandle, Emitter, Manager};
 
 use crate::audio::AudioRecorder;
+use crate::cleanup;
 use crate::cleanup::cleanup_text;
 use crate::paste::paste_text;
 use crate::settings::Settings;
 use crate::transcribe_local;
 use crate::transcribe_groq;
+use crate::transcribe_mistral;
+use crate::transcribe_parakeet;
 
 /// Calculate audio duration in seconds (16kHz, 16-bit, mono WAV)
 fn get_audio_duration(audio_path: &PathBuf) -> Result<f64, String> {
@@ -111,7 +114,7 @@ impl Recorder {
                         transcribe_mistral::transcribe_mistral(
                             &settings.mistral_api_key,
                             &temp_path,
-                            "voxtral-mini-transcribe-2602",
+                            "voxtral-mini-transcribe-2602".to_string(),
                         ).await?
                     }
                     _ => transcribe_groq::transcribe_groq(&settings.groq_api_key, &temp_path).await?,

@@ -5,7 +5,7 @@ use std::path::PathBuf;
 pub async fn transcribe_mistral(
     api_key: &str,
     audio_path: &PathBuf,
-    model: &str,
+    model: String,
 ) -> Result<String, String> {
     if api_key.is_empty() {
         return Err("Mistral API key not set. Please enter your API key in settings.".to_string());

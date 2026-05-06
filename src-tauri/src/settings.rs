@@ -8,8 +8,12 @@ pub struct Settings {
     pub engine: String, // "local" | "cloud" | "auto"
     #[serde(rename = "whisperModel")]
     pub whisper_model: String,
+    #[serde(rename = "groqApiKey")]
+    pub groq_api_key: String,
     #[serde(rename = "cloudProvider")]
     pub cloud_provider: String, // "groq" | "mistral"
+    #[serde(rename = "mistralApiKey")]
+    pub mistral_api_key: String,
     #[serde(rename = "enhancedFormatting")]
     pub enhanced_formatting: bool, // Use LLM to clean up transcription
     #[serde(rename = "recordingMode")]
@@ -23,7 +27,9 @@ impl Default for Settings {
             microphone: "default".to_string(),
             engine: "auto".to_string(), // Default to auto-router
             whisper_model: "small".to_string(),
+            groq_api_key: String::new(),
             cloud_provider: "groq".to_string(),
+            mistral_api_key: String::new(),
             enhanced_formatting: false, // Disable LLM cleanup by default
             recording_mode: "toggle".to_string(),
             hotkey: "CmdOrCtrl+Shift+Space".to_string(),
