@@ -114,7 +114,7 @@ impl Recorder {
                             "voxtral-mini-transcribe-2602",
                         ).await?
                     }
-                    _ => transcribe_groq::transcribe_groq(&temp_path).await?,
+                    _ => transcribe_groq::transcribe_groq(&settings.groq_api_key, &temp_path).await?,
                 }
             }
             "auto" => {
@@ -124,7 +124,7 @@ impl Recorder {
                 
                 if duration > 90.0 {
                     println!("[Typr] Auto: >90s, using cloud engine");
-                    transcribe_groq::transcribe_groq(&temp_path).await?
+                    transcribe_groq::transcribe_groq(&settings.groq_api_key, &temp_path).await?
                 } else {
                     println!("[Typr] Auto: <90s, using local engine");
                     let model_path = app_dir.join(transcribe_local::model_filename(&settings.whisper_model));

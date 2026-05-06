@@ -1,10 +1,14 @@
 use reqwest::multipart;
 use std::path::PathBuf;
 
-pub async fn transcribe_groq(audio_path: &PathBuf) -> Result<String, String> {
-    // Read API key from environment variable
-    let api_key = std::env::var("GROQ_API_KEY")
-        .map_err(|_| "GROQ_API_KEY environment variable not set. Please add it to your .env file or system environment.".to_string())?;
+pub async fn transcribe_groq(api_key: &str, audio_path: &PathBuf) -> Result<String, String> {
+    // Use provided key, fall back to env var
+    let api_key = if !api_key.is_empty() {
+        api_key.to_string()
+    } else {
+        std::env::var("GROQ_API_KEY")
+            .map_err(|_| "Groq API key not set. Please enter your API key in settings or set GROQ_API_KEY env var.".to_string())?
+    };
 
     let audio_bytes = std::fs::read(audio_path)
         .map_err(|e| format!("Failed to read audio file: {}", e))?;
@@ -51,13 +55,10 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_missing_env_var() {
-        // Test that missing GROQ_API_KEY env var returns error
+    async fn test_empty_api_key() {
         let path = PathBuf::from("/tmp/test.wav");
-        // Ensure env var is not set for this test
-        std::env::remove_var("GROQ_API_KEY");
-        let result = transcribe_groq(&path).await;
+        let result = transcribe_groq("", &path).await;
         assert!(result.is_err());
-        assert!(result.unwrap_err().contains("GROQ_API_KEY"));
+        assert!(result.unwrap_err().contains("API key not set"));
     }
 }
