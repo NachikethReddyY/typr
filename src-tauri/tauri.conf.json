@@ -38,6 +38,34 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "macOS": {
+      "frameworks": [],
+      "exceptionDomain": "",
+      "signingIdentity": null,
+      "hardenedRuntime": true,
+      "entitlements": null,
+      "providerShortName": null,
+      "notarize": false
+    },
+    "dmg": {
+      "background": null,
+      "window": {
+        "width": 660,
+        "height": 400
+      },
+      "align": {
+        "applications": "bottom-right",
+        "typr": "bottom-left"
+      }
+    },
+    "windows": {
+      "nsis": {
+        "installMode": "both",
+        "displayLanguageSelector": true,
+        "languages": ["SimpChinese", "English"]
+      },
+      "wix": null
+    }
   }
 }

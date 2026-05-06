@@ -5,11 +5,13 @@ use std::path::PathBuf;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Settings {
     pub microphone: String,
-    pub engine: String,
+    pub engine: String, // "local" | "cloud" | "auto"
     #[serde(rename = "whisperModel")]
     pub whisper_model: String,
-    #[serde(rename = "groqApiKey")]
-    pub groq_api_key: String,
+    #[serde(rename = "cloudProvider")]
+    pub cloud_provider: String, // "groq" | "mistral"
+    #[serde(rename = "enhancedFormatting")]
+    pub enhanced_formatting: bool, // Use LLM to clean up transcription
     #[serde(rename = "recordingMode")]
     pub recording_mode: String,
     pub hotkey: String,
@@ -19,9 +21,10 @@ impl Default for Settings {
     fn default() -> Self {
         Self {
             microphone: "default".to_string(),
-            engine: "local".to_string(),
+            engine: "auto".to_string(), // Default to auto-router
             whisper_model: "small".to_string(),
-            groq_api_key: String::new(),
+            cloud_provider: "groq".to_string(),
+            enhanced_formatting: false, // Disable LLM cleanup by default
             recording_mode: "toggle".to_string(),
             hotkey: "CmdOrCtrl+Shift+Space".to_string(),
         }
@@ -58,9 +61,10 @@ mod tests {
     fn test_default_settings() {
         let settings = Settings::default();
         assert_eq!(settings.microphone, "default");
-        assert_eq!(settings.engine, "local");
+        assert_eq!(settings.engine, "auto");
         assert_eq!(settings.whisper_model, "small");
-        assert_eq!(settings.groq_api_key, "");
+        assert_eq!(settings.cloud_provider, "groq");
+        assert_eq!(settings.enhanced_formatting, false);
         assert_eq!(settings.recording_mode, "toggle");
         assert_eq!(settings.hotkey, "CmdOrCtrl+Shift+Space");
     }
@@ -73,12 +77,16 @@ mod tests {
         let mut settings = Settings::default();
         settings.engine = "cloud".to_string();
         settings.groq_api_key = "test-key-123".to_string();
+        settings.cloud_provider = "mistral".to_string();
+        settings.mistral_api_key = "mistral-key".to_string();
 
         settings.save(&dir).unwrap();
         let loaded = Settings::load(&dir);
 
         assert_eq!(loaded.engine, "cloud");
         assert_eq!(loaded.groq_api_key, "test-key-123");
+        assert_eq!(loaded.cloud_provider, "mistral");
+        assert_eq!(loaded.mistral_api_key, "mistral-key");
 
         let _ = fs::remove_dir_all(&dir);
     }

@@ -10,6 +10,8 @@ use typr_lib::downloader;
 use typr_lib::recorder::{Recorder, RecordingState};
 use typr_lib::settings::Settings;
 use typr_lib::transcribe_local;
+use typr_lib::transcribe_parakeet;
+use typr_lib::transcribe_mistral;
 
 struct AppState {
     recorder: Recorder,

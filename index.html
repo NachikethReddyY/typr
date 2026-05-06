@@ -86,9 +86,11 @@
               </div>
               <div class="setting-control">
                 <div class="toggle-group">
-                  <button id="engine-local" class="toggle-btn active">Local Whisper</button>
-                  <button id="engine-cloud" class="toggle-btn">Groq Cloud</button>
+                  <button id="engine-auto" class="toggle-btn">Auto</button>
+                  <button id="engine-local" class="toggle-btn">Local Whisper</button>
+                  <button id="engine-cloud" class="toggle-btn">Cloud</button>
                 </div>
+                <div class="setting-hint" id="auto-hint">Auto: <1:30 local, >1:30 cloud</div>
               </div>
             </div>
             <div class="setting-row" id="local-settings">
@@ -111,11 +113,32 @@
             </div>
             <div class="setting-row hidden" id="cloud-settings">
               <div class="setting-label">
+                <span class="label-text">Cloud Provider</span>
+                <span class="label-hint">Choose your cloud transcription provider</span>
+              </div>
+              <div class="setting-control">
+                <div class="radio-group">
+                  <label><input type="radio" name="cloud-provider" value="groq" checked> Groq</label>
+                  <label><input type="radio" name="cloud-provider" value="mistral"> Mistral</label>
+                </div>
+              </div>
+            </div>
+            <div class="setting-row hidden" id="groq-settings">
+              <div class="setting-label">
                 <span class="label-text">Groq API Key</span>
                 <span class="label-hint">Get your key from console.groq.com</span>
               </div>
               <div class="setting-control">
                 <input type="password" id="groq-key" placeholder="gsk_..." />
+              </div>
+            </div>
+            <div class="setting-row hidden" id="mistral-settings">
+              <div class="setting-label">
+                <span class="label-text">Mistral API Key</span>
+                <span class="label-hint">Get your key from console.mistral.ai</span>
+              </div>
+              <div class="setting-control">
+                <input type="password" id="mistral-key" placeholder="mistral_..." />
               </div>
             </div>
           </div>
