@@ -2,6 +2,9 @@ name: Build and Release
 
 on:
   push:
+    branches:
+      - main
+      - improvements
     tags:
       - 'v*'  # Trigger on version tags like v0.1.0
   workflow_dispatch:  # Allow manual trigger
