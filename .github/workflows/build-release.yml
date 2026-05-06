@@ -2,9 +2,6 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
-      - improvements
     tags:
       - 'v*'
   workflow_dispatch:
@@ -52,9 +49,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            **/*.dmg
-            **/*.app
           draft: false
           prerelease: false
         env:
